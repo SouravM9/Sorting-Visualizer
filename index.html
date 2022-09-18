@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sorting Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="onLoadSetup()">
+
+    <div class="header">
+        <h1>Sorting Visualizer</h1>
+
+        <div id="display" class="display"></div>
+
+        <div id="options">
+            <div class="arraySizeSlider">
+                <label class="arraylabel">Array Size</label>
+                <input type="range" min="5" max="100" step="5" value="50" class="arrayslider" id="arrayslider">
+                <span id="arrayoutput"></span>
+            </div>
+            
+            <select class="speed" id="speed">
+                <option value="100">Slow</option>
+                <option value="50">Medium</option>
+                <option value="10">Fast</option>
+            </select>
+        </div>
+        <div class="buttongroup">
+            <button type="button" class="bubblesort" id="bubblesort">Bubble Sort</button>
+            <button type="button" class="insertionsort" id="insertionsort">Insertion Sort</button>
+            <button type="button" class="selectionsort" id="selectionsort">Selection Sort</button>
+            <button type="button" class="mergesort">Merge Sort</button>
+        </div>
+        <button type="button" class="newarraybutton" onclick="generateRandomArray()">Generate New Array</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
