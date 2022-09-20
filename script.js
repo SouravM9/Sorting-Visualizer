@@ -11,11 +11,12 @@ let bubbleSortBtn = document.getElementById("bubblesort");
 let speed = document.getElementById("speed");
 let insertionSortBtn = document.getElementById("insertionsort");
 let selectionSortBtn = document.getElementById("selectionsort");
+let mergeSortbtn = document.getElementById("mergesort");
 
 let bodyWidth = document.body.clientWidth;
 let bodyHeight = document.body.clientHeight;
 let arraySize = arraySlider.value;
-let array = new Array(arraySize);
+let arrayGlobal = new Array(arraySize);
 let speedMeasure = speed.value;
 
 // Get Slider value and show on page
@@ -33,13 +34,13 @@ speed.onchange = function () {
 // Generate Random array as per input
 
 function generateRandomArray() {
-    array = new Array(arraySize);
+    arrayGlobal = new Array(arraySize);
 
     for (let i = 0; i < arraySize; ++i)
     {
-        array[i] = Math.floor(Math.random() * TOTALSIZE) + 1;
+        arrayGlobal[i] = Math.floor(Math.random() * TOTALSIZE) + 1;
     }
-    renderBars(array);
+    renderBars(arrayGlobal);
 }
 
 // Render bars as per array generated
@@ -51,6 +52,7 @@ function renderBars(arr) {
     }
 
     displayArray.style.paddingLeft = (bodyWidth * (TOTALSIZE - arraySize)) / (TOTALSIZE * 2) + "px"; // Dynamically set the left padding
+    displayArray.style.paddingRight = (bodyWidth * (TOTALSIZE - arraySize)) / (TOTALSIZE * 2) + "px"; // Dynamically set the right padding
 
     for (let i = 0; i < arr.length; ++i) {
         let bar = document.createElement("div");
@@ -71,7 +73,7 @@ function Sleep(ms) {
 
 // Bubble Sort
 
-async function bubbleSort() {
+async function bubbleSort(array) {
     let bars = document.getElementsByClassName("bar");
     for (let i = 0; i < array.length - 1; ++i) {
         for (let j = 0; j < array.length - i - 1; ++j) {
@@ -97,12 +99,12 @@ async function bubbleSort() {
 }
 
 bubbleSortBtn.addEventListener("click", function () {
-    bubbleSort();
+    bubbleSort(arrayGlobal);
 });
 
 // Insertion Sort
 
-async function insertionSort() {
+async function insertionSort(array) {
     let bars = document.getElementsByClassName("bar");
     for (let i = 1; i < array.length; ++i) {
         let key = array[i];
@@ -129,12 +131,12 @@ async function insertionSort() {
 }
 
 insertionSortBtn.addEventListener("click", function () {
-    insertionSort();
+    insertionSort(arrayGlobal);
 });
 
 // Selection Sort
 
-async function selectionSort() {
+async function selectionSort(array) {
     let bars = document.getElementsByClassName("bar");
     for (let i = 0; i < array.length - 1; ++i) {
         let min = i;
@@ -170,5 +172,93 @@ async function selectionSort() {
 }
 
 selectionSortBtn.addEventListener("click", function () {
-    selectionSort();
+    selectionSort(arrayGlobal);
+});
+
+
+// Merge Sort
+
+async function mergeSort(array, low, high) {
+    let mid = Math.floor((low + high) / 2);
+    if (low < high) {
+        await mergeSort(array, low, mid);      // To wait for the previous recursions to get completed
+        await mergeSort(array, mid + 1, high);
+        await merge(array, low, mid, high);
+    }
+}
+
+async function merge(array, low, mid, high) {
+
+    let n1 = mid - low + 1;
+    let n2 = high - mid;
+    let k = low;
+    let array1 = new Array(n1), array2 = new Array(n2);
+    let bars = document.getElementsByClassName("bar");
+
+    for (let i = 0; i < n1; i++) {
+        array1[i] = array[k++];
+    }
+
+    for (let i = 0, k = mid + 1; i < n2; i++) {
+        array2[i] = array[k++];
+    }
+
+    let i = 0;
+    let j = 0;
+    k = low;
+
+    while (i < n1 && j < n2) {
+        if (array1[i] < array2[j]) {
+            array[k] = array1[i];
+
+            bars[k].style.height = array[k] * 5 + "px";
+            bars[k].style.backgroundColor = "#fecea8";
+            await Sleep(speedMeasure);
+
+            bars[k].style.backgroundColor = "#455d7a";
+
+            i++;
+            k++;
+        }
+        else {
+            array[k] = array2[j];
+
+            bars[k].style.height = array[k] * 5 + "px";
+            bars[k].style.backgroundColor = "#f95959";
+            await Sleep(speedMeasure);
+
+            bars[k].style.backgroundColor = "#455d7a";
+
+            j++;
+            k++;
+        }
+    }
+    while (i < n1) {
+        array[k] = array1[i];
+
+        bars[k].style.height = array[k] * 5 + "px";
+        bars[k].style.backgroundColor = "#fecea8";
+        await Sleep(speedMeasure);
+
+        bars[k].style.backgroundColor = "#455d7a";
+
+        i++;
+        k++;
+    }
+    while (j < n2) {
+        array[k] = array2[j];
+
+        bars[k].style.height = array[k] * 5 + "px";
+        bars[k].style.backgroundColor = "#f95959";
+        await Sleep(speedMeasure);
+
+        bars[k].style.backgroundColor = "#455d7a";
+        j++;
+        k++;
+    }
+
+}
+
+mergeSortbtn.addEventListener("click", function () {
+    mergeSort(arrayGlobal, 0, arraySize - 1);
 });
