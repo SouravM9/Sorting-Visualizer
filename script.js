@@ -5,6 +5,7 @@ let BARLENGTH = 5;
 
 // Declare Variables
 
+let generateArrayBtn = document.getElementById("newarraybutton");
 let arraySlider     = document.getElementById("arrayslider");
 let arrayOutput     = document.getElementById("arrayoutput");
 let displayArray    = document.getElementById("display");
@@ -14,7 +15,8 @@ let insertionSortBtn = document.getElementById("insertionsort");
 let selectionSortBtn = document.getElementById("selectionsort");
 let mergeSortbtn    = document.getElementById("mergesort");
 let countSortBtn    = document.getElementById("countsort");
-let countBoard      = document.getElementById("counthelper");
+let countBoard = document.getElementById("counthelper");
+let quickSortBtn = document.getElementById("quicksort");
 
 let bodyWidth       = document.body.clientWidth;
 let bodyHeight      = document.body.clientHeight;
@@ -75,6 +77,10 @@ function renderBars(arr) {
     }
 }
 
+generateArrayBtn.addEventListener("click", function () {
+    generateRandomArray();
+});
+
 function onLoadSetup() {
     generateRandomArray();
 }
@@ -111,8 +117,10 @@ async function bubbleSort(array) {
     await Sleep(speedMeasure);
 }
 
-bubbleSortBtn.addEventListener("click", function () {
-    bubbleSort(arrayGlobal);
+bubbleSortBtn.addEventListener("click", async function () {
+    disableButtons();
+    await bubbleSort(arrayGlobal);
+    enableButtons();
 });
 
 // Insertion Sort
@@ -143,8 +151,10 @@ async function insertionSort(array) {
     }
 }
 
-insertionSortBtn.addEventListener("click", function () {
-    insertionSort(arrayGlobal);
+insertionSortBtn.addEventListener("click", async function () {
+    disableButtons();
+    await insertionSort(arrayGlobal);
+    enableButtons();
 });
 
 // Selection Sort
@@ -184,8 +194,10 @@ async function selectionSort(array) {
     }
 }
 
-selectionSortBtn.addEventListener("click", function () {
-    selectionSort(arrayGlobal);
+selectionSortBtn.addEventListener("click",async function () {
+    disableButtons();
+    await selectionSort(arrayGlobal);
+    enableButtons();
 });
 
 
@@ -272,10 +284,13 @@ async function merge(array, low, mid, high) {
 
 }
 
-mergeSortbtn.addEventListener("click", function () {
-    mergeSort(arrayGlobal, 0, arraySize - 1);
+mergeSortbtn.addEventListener("click", async function () {
+    disableButtons();
+    await mergeSort(arrayGlobal, 0, arraySize - 1);
+    enableButtons();
 });
 
+//  Find the maximum element from array
 
 function findMax(array) {
     let max = -1;
@@ -285,6 +300,8 @@ function findMax(array) {
     }
     return max;
 }
+
+// Count Sort
 
 async function countSort(array) {
 
@@ -315,7 +332,6 @@ async function countSort(array) {
         await Sleep(speedMeasure);
 
     }
-    //renderCountBoard(countArr);
 
     j = 0;
     i = 0;
@@ -338,6 +354,108 @@ async function countSort(array) {
     }
 }
 
-countSortBtn.addEventListener("click", function () {
-    countSort(arrayGlobal);
+countSortBtn.addEventListener("click",async function () {
+    disableButtons();
+    await countSort(arrayGlobal);
+    enableButtons();
 });
+
+
+//Quick Sort
+
+async function quickSort(arr, low, high) {
+    if (low < high) {
+        let partitionPos = await partition(arr, low, high);
+        await quickSort(arr, low, partitionPos - 1);
+        await quickSort(arr, partitionPos + 1, high);
+    }
+}
+
+async function partition(arr, low, high) {
+    let pivot = low;
+    let i = low + 1;
+    let j = high;
+    let bars = document.getElementsByClassName("bar");
+
+    do {
+        while (arr[i] <= arr[pivot])
+            i++;
+
+        while (arr[j] > arr[pivot])
+            j--;
+
+        if (i < j) {
+            let temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+
+            bars[i].style.height = arr[i] * BARLENGTH + "px";
+            bars[i].style.backgroundColor = CREAM;
+
+            bars[j].style.height = arr[j] * BARLENGTH + "px";
+            bars[j].style.backgroundColor = CYAN;
+
+            await Sleep(speedMeasure);
+
+            bars[i].style.backgroundColor = ORANGE;
+            bars[j].style.backgroundColor = ORANGE;
+        }
+    } while (i < j);
+
+    let temp = arr[pivot];
+    arr[pivot] = arr[j];
+    arr[j] = temp;
+
+    bars[pivot].style.height = arr[pivot] * BARLENGTH + "px";
+    bars[pivot].style.backgroundColor = CREAM;
+
+    bars[j].style.height = arr[j] * BARLENGTH + "px";
+    bars[j].style.backgroundColor = CYAN;
+
+    await Sleep(speedMeasure);
+
+    bars[pivot].style.backgroundColor = ORANGE;
+    bars[j].style.backgroundColor = ORANGE;
+
+    return j;
+}
+
+quickSortBtn.addEventListener("click", async function () {
+    disableButtons();
+    await quickSort(arrayGlobal, 0, arraySize - 1);
+    enableButtons();
+});
+
+function disableButtons() {
+    bubbleSortBtn.disabled = true;
+    bubbleSortBtn.style.cursor = "not-allowed";
+    insertionSortBtn.disabled = true;
+    insertionSortBtn.style.cursor = "not-allowed";
+    selectionSortBtn.disabled = true;
+    selectionSortBtn.style.cursor = "not-allowed";
+    mergeSortbtn.disabled = true;
+    mergeSortbtn.style.cursor = "not-allowed";
+    quickSortBtn.disabled = true;
+    quickSortBtn.style.cursor = "not-allowed";
+    countSortBtn.disabled = true;
+    countSortBtn.style.cursor = "not-allowed";
+    generateArrayBtn.disabled = true;
+    generateArrayBtn.style.cursor = "not-allowed";
+}
+
+function enableButtons() {
+    bubbleSortBtn.disabled = false;
+    bubbleSortBtn.style.cursor = "default";
+    insertionSortBtn.disabled = false;
+    insertionSortBtn.style.cursor = "default";
+    selectionSortBtn.disabled = false;
+    selectionSortBtn.style.cursor = "default";
+    mergeSortbtn.disabled = false;
+    mergeSortbtn.style.cursor = "default";
+    quickSortBtn.disabled = false;
+    quickSortBtn.style.cursor = "default";
+    countSortBtn.disabled = false;
+    countSortBtn.style.cursor = "default";
+    generateArrayBtn.disabled = false;
+    generateArrayBtn.style.cursor = "default";
+}
