@@ -1,14 +1,21 @@
+/*
+    Color Guide:
+    Black - #222831
+    Dark blue - #2d4059
+    Orange - #ff5722
+    Cream - #eeeeee
+    Light Blue - #e4f1fe
+*/
 * {
-    background-color: #e3e3e3;
+    background-color: #222831; 
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: #f95959;
-    border-color: #233142;
-    text-align:center;
+    color: #eeeeee;
+    border-color: #2d4059;
+    text-align: center;
 }
 .arrayslider::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 100px;
-    background: red;
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
@@ -20,12 +27,20 @@
 
 
 .bar {
-    background-color: #455d7a;
+    background-color: #ff5722;
     border: none;
     display: inline-block;
-    /*transition: height 0.5s ease-in-out;*/
     width: 15px;
     border-radius: 2px;
+}
+
+.count {
+    background-color: #e4f1fe;
+    width: 10px;
+    display: inline-block;
+    border: none;
+    border-radius: 2px;
+    /*transition: height 0.5s ease-in-out;*/
 }
 
 .display {
@@ -34,19 +49,24 @@
     display: flex;
     flex-direction: row;
 }
+.counthelper {
+    white-space: nowrap;
+    height: 30px;
+}
 
-.buttongroup{
+.buttongroup {
     padding: 5px;
 }
 * > button {
     font-size: 12px;
-    background-color: #233142;
+    background-color: #2d4059;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     padding: 10px;
     transition-duration: 0.4s;
     border-radius: 8px;
+    color: #ff5722;
 }
 
 * > button:hover {
-    background-color: #e3e3e3;
+    background-color: #eeeeee;
 }
