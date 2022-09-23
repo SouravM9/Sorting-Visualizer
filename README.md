@@ -1,4 +1,4 @@
-Sorting Visualizer is a JavaScript Web Application for visualizing various sorting alogorithms.
+Sorting Visualizer is a JavaScript Web Application for visualizing various sorting algorithms.
 
 Try it out - https://souravm9.github.io/Sorting-Visualizer/
 
