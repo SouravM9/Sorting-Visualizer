@@ -17,3 +17,5 @@ Time Complexity: Nlog(N)
 Time Complexity: O(N)
 
 ![alt text](https://github.com/SouravM9/Sorting-Visualizer/blob/master/Image.png)
+
+For more details, please visit - https://www.geeksforgeeks.org/sorting-algorithms
