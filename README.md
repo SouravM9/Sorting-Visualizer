@@ -21,8 +21,9 @@ Time Complexity: O(N)
 
 ## Screenshots
 
-![Demo](https://github.com/SouravM9/Sorting-Visualizer/blob/master/Sorting_Visualizer_Demo.gif)
+<img src="./Demo/Sorting_Visualizer_Demo.gif" alt="Demo">
 
-![alt text](https://github.com/SouravM9/Sorting-Visualizer/blob/master/Image.png)
+<img src="./Demo/Image.png" alt="Screenshot">
+
 
 For more details, please visit - https://www.geeksforgeeks.org/sorting-algorithms
